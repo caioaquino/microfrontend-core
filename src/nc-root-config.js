@@ -1,20 +1,19 @@
 import { registerApplication, start } from "single-spa";
+import {
+  constructApplications,
+  constructRoutes,
+  constructLayoutEngine,
+} from "single-spa-layout";
 
-registerApplication({
-  name: "@nc/dashboard",
-  app: () => System.import("@nc/dashboard"),
-  activeWhen: ["/dashboard"],
+const routes = constructRoutes(document.querySelector("#single-spa-layout"));
+console.log(routes);
+const applications = constructApplications({
+  routes,
+  loadApp({ name }) {
+    return System.import(name);
+  },
 });
-registerApplication({
-  name: "@nc/register",
-  app: () => System.import("@nc/register"),
-  activeWhen: ["/register"],
-});
-registerApplication({
-  name: "@nc/menu",
-  app: () => System.import("@nc/menu"),
-  activeWhen: ["/"],
-});
-start({
-  urlRerouteOnly: true,
-});
+const layoutEngine = constructLayoutEngine({ routes, applications });
+
+applications.forEach(registerApplication);
+start();

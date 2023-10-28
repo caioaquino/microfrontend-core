@@ -11,6 +11,7 @@
     browsers. More information at https://github.com/single-spa/create-single-spa/issues/112
   -->
     <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.7/runtime.min.js"></script>
+
     <!--
     This CSP allows any SSL-enabled host and for arbitrary eval(), but you should limit these directives further to increase your app's security.
     Learn more about CSP policies at https://content-security-policy.com/#directive
@@ -77,7 +78,24 @@
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
     <% } %>
+
+    <template id="single-spa-layout">
+      <single-spa-router>
+        <nav class="topnav">
+          <application name="@nc/menu"></application>
+        </nav>
+        <div class="main-content" style="padding: 24px">
+          <route path="dashboard">
+            <application name="@nc/dashboard"></application>
+          </route>
+          <route path="register">
+            <application name="@nc/register"></application>
+          </route>
+        </div>
+      </single-spa-router>
+    </template>
   </head>
+
   <body style="margin: 0">
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <main></main>
